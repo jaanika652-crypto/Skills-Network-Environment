@@ -1,46 +1,34 @@
-// Create a new XMLHttpRequest object
+// Step 3: Define XMLHttpRequest object and URL variable
 var xhr = new XMLHttpRequest();
+var url = './news_article.json'; // Adjust the path if needed
 
-// Specify the URL to your JSON file (adjust the path as needed)
-var url = './health_article.json';
-
-// Initialize a GET request
+// Step 4: Open a GET request to the URL (asynchronous)
 xhr.open('GET', url, true);
 
-// Set the response type to JSON
+// Step 5: Set the expected response type to JSON
 xhr.responseType = 'json';
 
-// Define what happens when the response is loaded
+// Step 6: Define what happens when the data is loaded
 xhr.onload = function() {
   if (xhr.status === 200) {
-    // Retrieve the articles array from the response
     var articles = xhr.response.articles;
-
-    // Get the container div where articles will be displayed
     var articlesDiv = document.getElementById('articles');
+    articlesDiv.innerHTML = ''; // Clear existing content
 
-    // Clear any existing content
-    articlesDiv.innerHTML = '';
-
-    // Iterate through each article in the array
+    // Use forEach to iterate and create HTML elements dynamically
     articles.forEach(function(article) {
-      // Create a container div for the article and add a CSS class
       var articleDiv = document.createElement('div');
       articleDiv.classList.add('article');
 
-      // Create and populate the title element
       var title = document.createElement('h2');
       title.textContent = article.title;
 
-      // Create and populate the description paragraph
       var description = document.createElement('p');
       description.textContent = article.description;
 
-      // Create header for "Ways to Achieve"
       var waysHeader = document.createElement('h3');
       waysHeader.textContent = 'Ways to Achieve:';
 
-      // Create an unordered list for ways_to_achieve
       var waysList = document.createElement('ul');
       article.ways_to_achieve.forEach(function(way) {
         var listItem = document.createElement('li');
@@ -48,11 +36,9 @@ xhr.onload = function() {
         waysList.appendChild(listItem);
       });
 
-      // Create header for "Benefits"
       var benefitsHeader = document.createElement('h3');
       benefitsHeader.textContent = 'Benefits:';
 
-      // Create an unordered list for benefits
       var benefitsList = document.createElement('ul');
       article.benefits.forEach(function(benefit) {
         var listItem = document.createElement('li');
@@ -60,7 +46,6 @@ xhr.onload = function() {
         benefitsList.appendChild(listItem);
       });
 
-      // Append all created elements to the articleDiv
       articleDiv.appendChild(title);
       articleDiv.appendChild(description);
       articleDiv.appendChild(waysHeader);
@@ -68,7 +53,6 @@ xhr.onload = function() {
       articleDiv.appendChild(benefitsHeader);
       articleDiv.appendChild(benefitsList);
 
-      // Append the articleDiv to the main container
       articlesDiv.appendChild(articleDiv);
     });
   } else {
